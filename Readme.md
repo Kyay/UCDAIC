@@ -1,8 +1,8 @@
-# AIC Flight Delay Predictor
+# UC Davis AIC
 
 An end-to-end Machine Learning pipeline and predictive application developed for the **AI Collective (AIC) @ UC Davis** (Fall 2026 Beginner AI Project Cycle).
 
-This project uses flight telemetry data to analyze airline schedule reliability, predict continuous arrival delay lengths, and classify flight delay probabilities ($\ge 15$ minutes) using Federal Aviation Administration (FAA) criteria.
+This project uses commercial flight operations telemetry to analyze airline schedule reliability, predict continuous arrival delay lengths, and classify flight delay probabilities ($\ge 15$ minutes) following standard FAA criteria.
 
 ---
 
@@ -12,7 +12,7 @@ This project uses flight telemetry data to analyze airline schedule reliability,
 .
 ├── Readme.md
 ├── data/
-│   └── flights_sample.parquet      # Flight operations telemetry dataset
+│   └── flights_sample.parquet      # Sample flight operations telemetry dataset
 └── week1/
     ├── requirement.txt             # Environment dependencies for Week 1
     └── week_material.ipynb         # EDA, data cleaning, and baseline regression notebook
@@ -22,12 +22,12 @@ This project uses flight telemetry data to analyze airline schedule reliability,
 
 ## Project Overview
 
-Flight delays disrupt travel schedules and create logistical bottlenecks across airport hubs. This project builds a complete machine learning workflow from data cleaning to model deployment:
+Airline delays cause severe disruptions for passengers and cascade across airport hub logistics. This project develops a complete machine learning lifecycle from data ingestion to user-facing deployment:
 
-* **Dataset:** Serialized Apache Parquet dataset (`data/flights_sample.parquet`) optimized for memory efficiency and fast column reads.
-* **Task 1 (Regression - Week 1):** Predict exact arrival delay duration in minutes ($y \in \mathbb{R}$) using flight distance, elapsed time, and departure metrics.
+* **Dataset:** Serialized Apache Parquet dataset (`data/flights_sample.parquet`) optimized for memory efficiency and fast columnar reads.
+* **Task 1 (Regression - Week 1):** Predict exact arrival delay duration in minutes ($y \in \mathbb{R}$) using flight distance, scheduled elapsed time, and departure metrics.
 * **Task 2 (Classification - Week 2):** Predict binary flight delay status ($y \in \{0, 1\}$, where $1$ denotes an arrival delay $\ge 15$ minutes).
-* **Delivery (Weeks 5 & 6):** Export a serialized scikit-learn pipeline using `joblib`, serve predictions via a FastAPI endpoint, and connect to an interactive frontend UI.
+* **Delivery (Weeks 5 & 6):** Export a serialized scikit-learn pipeline using `joblib`, serve predictions via a FastAPI backend, and connect to an interactive frontend UI.
 
 ---
 
@@ -57,11 +57,11 @@ Flight delays disrupt travel schedules and create logistical bottlenecks across 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/milesmartinez423/AIC-Flight-Project.git
-cd AIC-Flight-Project
+git clone https://github.com/Kyay/UCDAIC.git
+cd UCDAIC
 ```
 
-### 2. Set Up a Virtual Environment
+### 2. Set Up an Isolated Virtual Environment
 ```bash
 # macOS / Linux
 python3 -m venv .venv
@@ -78,19 +78,19 @@ pip install --upgrade pip
 pip install -r week1/requirement.txt
 ```
 
-> **Note on Parquet Files:** Reading `.parquet` files via Pandas requires an engine such as `pyarrow`. If not listed in your requirements, install it with:
+> **Note on Parquet Support:** Reading `.parquet` files via Pandas requires an engine such as `pyarrow`. If not included in your requirements, install it with:
 > ```bash
 > pip install pyarrow
 > ```
 
 ### 4. Reading the Parquet Dataset
-In Python or inside `week_material.ipynb`:
+In Python or inside `week1/week_material.ipynb`:
 ```python
 import pandas as pd
 
 # Load flight parquet records
 df = pd.read_parquet("data/flights_sample.parquet")
-print("Shape:", df.shape)
+print("Dataset Shape:", df.shape)
 print(df.head())
 ```
 
@@ -105,7 +105,7 @@ jupyter notebook week1/week_material.ipynb
 
 To maintain clean repository hygiene across team members:
 
-1. **Never commit directly to `main`:** All work must be done on isolated branches.
+1. **Never commit directly to `main`:** All work must be done on isolated feature branches.
 2. **Branch Naming Standard:**
    * `feature/week1-baseline-regression`
    * `feature/week2-classification`
@@ -119,7 +119,7 @@ To maintain clean repository hygiene across team members:
 4. **Committing Changes:**
    ```bash
    git add <modified-files>
-   git commit -m "feat(week1): add baseline linear regression model"
+   git commit -m "feat(week1): complete EDA and fit baseline linear regression"
    git push origin feature/<your-feature-name>
    ```
 5. **Pull Requests:** Open a PR on GitHub for team review before merging into `main`.
